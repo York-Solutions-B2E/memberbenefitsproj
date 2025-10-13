@@ -1,0 +1,14 @@
+#version: '3'
+
+services:
+  memberbenefitsdb:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: default
+      PGDATA: /data/postgres
+    volumes:
+      - ./db-data/:/data/postgres
