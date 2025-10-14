@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+// function created but may not be needed for this project
+// just leaving it here for now
 function useSessionStorage(key, initialValue) {
     const [value, setValue] = useState(() => {
         // Check if window is defined to handle server-side rendering

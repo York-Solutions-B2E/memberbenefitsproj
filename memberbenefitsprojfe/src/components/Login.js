@@ -1,25 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {Container, Row, Col, Form, Button, Card} from 'react-bootstrap';
+import {Container, Row, Col, Card} from 'react-bootstrap';
 import {GoogleLogin} from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode';
-import SessionStorageInit from "./SessionStorageInit";
+import {useNavigate} from "react-router";
 
 function Login() {
-    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Get item from session storage after component mounts
         const storedUser = sessionStorage.getItem('user');
+        console.log(storedUser);
         if (storedUser) {
-            setUserData(JSON.parse(storedUser));
+            const userData= JSON.parse(storedUser);
+            // maybe a better practice to check the sub/token i.e "1203989049039"
+            // redirect to dashboard if session was previously logged in
+            console.log("user data", userData);
+            if (userData?.email_verified) {
+                navigate('/dashboard');
+            }
         }
     }, []); // Run only once on mount
-
-    const storeUser = (user) => {
-        // Set item in session storage
-        sessionStorage.setItem('user', JSON.stringify(user));
-        setUserData(user);
-    };
 
     const handleGoogleSuccess = (credentialResponse) => {
         // console.log('Google login successful:', credentialResponse);
@@ -29,7 +30,11 @@ function Login() {
         // TODO: Send the `credentialResponse.credential` to your backend for verification
 
         //store in session if success
-        storeUser(decoded);
+        // Set item in session storage
+        sessionStorage.setItem('user', JSON.stringify(decoded));
+
+        // render dashboard upon successful login
+        navigate('/dashboard');
     };
 
     const handleGoogleFailure = () => {
@@ -53,7 +58,7 @@ function Login() {
                                     onError={handleGoogleFailure}
                                     text="Log In with Google"
                                 />
-                                {}
+                                {/*some error message display here*/}
                             </div>
 
                         </Card.Body>
