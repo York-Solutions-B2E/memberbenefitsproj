@@ -1,11 +1,9 @@
 package com.yorksolutions.memberbenefitsprojbe;
 
-import com.yorksolutions.memberbenefitsprojbe.config.MBService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
@@ -13,10 +11,15 @@ public class MBController {
 
     private MBService mbService;
 
+    @Autowired
+    public MBController(@NonNull MBService mbService) {
+        this.mbService = mbService;
+    }
+
+    @CrossOrigin
     @PostMapping("/api/auth/google")
     public ResponseEntity<?> googleLogin(@RequestBody String token) {
         try {
-            System.out.println("string token is: " + token);
             String subject = mbService.verifyGoogleLogin(token);
             // After verification, you can generate your own session/JWT token
             // for the user if you need to maintain a session.

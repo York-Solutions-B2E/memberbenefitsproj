@@ -11,7 +11,7 @@ import java.util.Collections;
 @Configuration
 public class GoogleAuthConfiguration {
 
-    @Value("11830788307-7343nfjrodf4ml27293ptjqp8a3us1hc.apps.googleusercontent.com")
+    @Value("${google.client.id}")
     private String clientId;
 
     @Bean

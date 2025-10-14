@@ -15,6 +15,7 @@ function Login() {
 
     const handleGoogleSuccess = (credentialResponse) => {
         console.log('Google login successful:', credentialResponse);
+        console.log('Not decoded: ',credentialResponse.credential);
         const decoded = jwtDecode(credentialResponse.credential);
         console.log('Decoded JWT:', decoded);
         // TODO: Send the `credentialResponse.credential` to your backend for verification
