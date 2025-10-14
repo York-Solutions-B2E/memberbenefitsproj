@@ -1,0 +1,32 @@
+/* Sets the image as a background */
+.healthcare-background {
+    /* This is where the imported image variable will be applied in React */
+    background-image: var(--bg-image);
+
+    /* Styling properties */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Full viewport height */
+    width: 100%;
+    position: relative;
+}
+
+/* Optional overlay for text readability */
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: 0.3; /* 30% opacity */
+}
+
+/* Content layer to be above the overlay */
+.background-content {
+    position: relative;
+    z-index: 10;
+    padding: 32px; /* Add some padding for content */
+    color: white; /* Make text readable on a dark background */
+}
