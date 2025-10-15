@@ -9,12 +9,13 @@ import "./bgimage.css"
 import image from "./memberbenefit.png";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import ProtectedRoutes from "./util/ProtectedRoutes";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Login/>,
+        element: <Login/>
     },
     {
         path: "/login",
@@ -22,13 +23,16 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <Dashboard/>
+        element: (<ProtectedRoutes>
+            <Dashboard/>
+            </ProtectedRoutes>
+        )
     }
 ])
 root.render(
     <React.StrictMode>
         <GoogleOAuthProvider clientId={"11830788307-7343nfjrodf4ml27293ptjqp8a3us1hc.apps.googleusercontent.com"}>
-            <Container>
+            <Container style={{"all": "unset"}}>
                 <div className="healthcare-background" style={{'--bg-image': `url(${image})`}}>
                     <div className="background-overlay"></div>
                     <div className="background-content">

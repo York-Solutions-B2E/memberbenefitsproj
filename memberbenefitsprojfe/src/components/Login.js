@@ -17,6 +17,7 @@ function Login() {
             // redirect to dashboard if session was previously logged in
             console.log("user data", userData);
             if (userData?.email_verified) {
+                console.log("tried to nav")
                 navigate('/dashboard');
             }
         }
