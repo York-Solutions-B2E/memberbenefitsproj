@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useNavigate} from "react-router";
+import {Link, useNavigate} from "react-router-dom";
 import {Button, Container, Row, Col, Card, ProgressBar, ListGroup,} from "react-bootstrap";
 import SignOutButton from "./SignOutButton";
 
@@ -7,23 +7,23 @@ function Dashboard({props}) {
     const activeSession = JSON.parse(sessionStorage.getItem('user'));
     const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log(activeSession);
-        if (!activeSession?.email_verified) {
-            console.log(activeSession);
-            navigate('/login');
-        }
-    }, []);
+    // useEffect(() => {
+    //     console.log(activeSession);
+    //     if (!activeSession?.email_verified) {
+    //         console.log(activeSession);
+    //         navigate('/login');
+    //     }
+    // }, []);
 
     const deductibleProgress = (300 / 1500) * 100;
     const oopProgress = (1200 / 6000) * 100;
 
     const claims = [
-        {id: '#C-10421', status: 'Processed', amount: '$45'},
-        {id: '#C-10405', status: 'Denied', amount: '$0'},
-        {id: '#C-10398', status: 'Paid', amount: '$120'},
-        {id: '#C-10375', status: 'In Review', amount: '$—'},
-        {id: '#C-10312', status: 'Paid', amount: '$60'},
+        {id: 'C-10421', status: 'Processed', amount: '$45'},
+        {id: 'C-10405', status: 'Denied', amount: '$0'},
+        {id: 'C-10398', status: 'Paid', amount: '$120'},
+        {id: 'C-10375', status: 'In Review', amount: '$—'},
+        {id: 'C-10312', status: 'Paid', amount: '$60'},
     ];
     return (
         <Container className="mt-4">
@@ -34,7 +34,7 @@ function Dashboard({props}) {
                         {(activeSession?.given_name && activeSession.family_name)
                             ? <strong>{activeSession?.given_name + ' ' + activeSession?.family_name}</strong>
                             : <></>}
-                        <SignOutButton variant="primary" className="ms-3 text-decoration-none"/>
+                        <SignOutButton variant="danger" className="ms-3 text-decoration-none"/>
                     </div>
                 </Card.Header>
 
@@ -75,8 +75,10 @@ function Dashboard({props}) {
                                     <ListGroup variant="flush">
                                         {claims.map((claim, idx) => (
                                             <ListGroup.Item key={idx}>
-                                                {claim.id} <span className="text-muted">{claim.status}</span>{' '}
-                                                <strong>{claim.amount}</strong>
+                                                <Link to={`/ClaimDetail/${claim.id}`}>
+                                                    {claim.id} <span className="text-muted">{claim.status}</span>{' '}
+                                                    <strong>{claim.amount}</strong>
+                                                </Link>
                                             </ListGroup.Item>
                                         ))}
                                     </ListGroup>
@@ -87,7 +89,7 @@ function Dashboard({props}) {
                 </Card.Body>
 
                 <Card.Footer className="text-center">
-                    <Button variant="link">View All Claims</Button>
+                    <Button variant="link" onClick={() => navigate('/ClaimList')}>View All Claims</Button>
                 </Card.Footer>
             </Card>
         </Container>

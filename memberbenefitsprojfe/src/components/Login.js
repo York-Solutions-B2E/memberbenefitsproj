@@ -16,10 +16,10 @@ function Login() {
             // maybe a better practice to check the sub/token i.e "1203989049039"
             // redirect to dashboard if session was previously logged in
             console.log("user data", userData);
-            if (userData?.email_verified) {
-                console.log("tried to nav")
-                navigate('/dashboard');
-            }
+            // if (userData?.email_verified) {
+            //     console.log("tried to nav")
+            //     navigate('/dashboard');
+            // }
         }
     }, []); // Run only once on mount
 

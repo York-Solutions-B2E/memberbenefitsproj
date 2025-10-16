@@ -10,6 +10,9 @@ import image from "./memberbenefit.png";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoutes from "./util/ProtectedRoutes";
+import ClaimList from "./components/ClaimList";
+import ClaimDetail from "./components/ClaimDetail";
+import NotFound from "./components/NotFound";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -22,11 +25,28 @@ const router = createBrowserRouter([
         element: <Login/>,
     },
     {
+        path: "*",
+        element: <NotFound />,
+    },
+    {
         path: "/dashboard",
         element: (<ProtectedRoutes>
             <Dashboard/>
             </ProtectedRoutes>
         )
+    },
+    {
+        path: "ClaimList",
+        element: (<ClaimList/>),
+    },
+    {
+        path: "ClaimDetail",
+        element: (<ClaimDetail/>),
+    },
+    {
+        path: "ClaimDetail/:id",
+        element: (<ClaimDetail/>),
+        errorElement: <NotFound />,
     }
 ])
 root.render(

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Table, Form, InputGroup, Button, Dropdown, Pagination, Row, Col, Container, Card} from 'react-bootstrap';
+import SignOutButton from "./SignOutButton";
 
 
 function ClaimList({}) {
@@ -14,14 +15,19 @@ function ClaimList({}) {
     const [provider, setProvider] = useState('');
     const [claimNumber, setClaimNumber] = useState('');
 
+    const activeSession = JSON.parse(sessionStorage.getItem('user'));
+
+
     return (
         <Container className="mt-4">
             <Card>
                 <Card.Header className="d-flex justify-content-between align-items-center">
                     <h5 className="mb-0">Claims</h5>
                     <div>
-                        <strong>John Smith</strong>
-                        <a href="#" className="ms-3 text-decoration-none">Sign out</a>
+                        {(activeSession?.given_name && activeSession.family_name)
+                            ? <strong>{activeSession?.given_name + ' ' + activeSession?.family_name}</strong>
+                            : <></>}
+                        <SignOutButton variant="danger" className="ms-3 text-decoration-none"/>
                     </div>
                 </Card.Header>
 
