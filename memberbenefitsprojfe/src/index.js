@@ -26,27 +26,37 @@ const router = createBrowserRouter([
     },
     {
         path: "*",
-        element: <NotFound />,
+        element: <NotFound/>,
     },
     {
         path: "/dashboard",
         element: (<ProtectedRoutes>
-            <Dashboard/>
+                <Dashboard/>
             </ProtectedRoutes>
         )
     },
     {
         path: "ClaimList",
-        element: (<ClaimList/>),
+        element: (
+            <ProtectedRoutes>
+                <ClaimList/>
+            </ProtectedRoutes>
+        ),
     },
     {
         path: "ClaimDetail",
-        element: (<ClaimDetail/>),
+        element: (
+            <ProtectedRoutes>
+                <ClaimDetail/>
+            </ProtectedRoutes>
+        ),
     },
     {
         path: "ClaimDetail/:id",
-        element: (<ClaimDetail/>),
-        errorElement: <NotFound />,
+        element: (<ProtectedRoutes>
+            <ClaimDetail/>
+        </ProtectedRoutes>),
+        errorElement: <NotFound/>,
     }
 ])
 root.render(

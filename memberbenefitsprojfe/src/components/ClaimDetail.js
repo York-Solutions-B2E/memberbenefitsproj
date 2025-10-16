@@ -1,6 +1,14 @@
-import { Container, Row, Col, Table, Button, Badge } from 'react-bootstrap';
+import {
+    Container,
+    Row,
+    Col,
+    Table,
+    Button,
+    Badge,
+    Card,
+} from 'react-bootstrap';
 import {useParams} from "react-router-dom";
-import NotFound from "./NotFound";
+
 
 const ClaimDetail = () => {
     const {id} = useParams();
@@ -46,71 +54,64 @@ const ClaimDetail = () => {
     const claim = claims.find(c => c.claimId === id);
 
     return (
-        claim ? <Container className="mt-4 border rounded p-4 shadow-sm bg-light">
-            {/* Header */}
-            <Row className="mb-3">
-                <Col>
-                    <h5>
-                        Claim <strong>#{claim.claimId}</strong>
-                    </h5>
-                    <div>
-                        <strong>Provider:</strong> {claim.provider}
-                    </div>
-                    <div>
-                        <strong>Service Dates:</strong> {claim.serviceDate}
-                    </div>
-                    <div>
-                        <strong>Status:</strong> <Badge bg="info">{claim.status}</Badge>
-                    </div>
-                </Col>
-            </Row>
-
-            {/* Status Timeline */}
-            <Row className="mb-4">
-                <Col>
-                    <strong>Status Timeline:</strong>{' '}
-                    {claim.statusTimeline.map((status, i) => (
-                        <span key={i}>
-              [{status}]
-                            {i < claim.statusTimeline.length - 1 && ' — '}
-            </span>
-                    ))}
-                </Col>
-            </Row>
+        <Container className="py-4">
+            {/* Header Section */}
+            <Card className="mb-4 shadow-sm">
+                <Card.Body>
+                    <Row>
+                        <Col>
+                            <h4>Claim #{claim.claimId}</h4>
+                            <div><strong>Provider:</strong> {claim.provider}</div>
+                            <div><strong>Service Dates:</strong> {claim.serviceDate}</div>
+                            <div>
+                                <strong>Status:</strong>{' '}
+                                <Badge bg="info" className="text-uppercase">
+                                    {claim.status}
+                                </Badge>
+                            </div>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
 
             {/* Financial Summary */}
-            <Row className="mb-4">
-                <Col>
-                    <h6>Financial Summary</h6>
-                    <ul className="list-unstyled mb-0">
-                        <li>• <strong>Total Billed:</strong> ${claim.financialSummary.billed.toFixed(2)}</li>
-                        <li>• <strong>Allowed Amount:</strong> ${claim.financialSummary.allowed.toFixed(2)}</li>
-                        <li>• <strong>Plan Paid:</strong> ${claim.financialSummary.planPaid.toFixed(2)}</li>
-                        <li>• <strong>Member Responsibility:</strong> ${claim.financialSummary.memberResp.toFixed(2)}</li>
-                    </ul>
-                </Col>
-            </Row>
+            <Card className="mb-4">
+                <Card.Body>
+                    <h5>Financial Summary</h5>
+                    <Row>
+                        <Col md={6}>
+                            <ul className="list-unstyled mb-0">
+                                <li>💰 <strong>Total Billed:</strong> ${claim.financialSummary.billed.toFixed(2)}</li>
+                                <li>📉 <strong>Allowed Amount:</strong> ${claim.financialSummary.allowed.toFixed(2)}</li>
+                                <li>🏦 <strong>Plan Paid:</strong> ${claim.financialSummary.planPaid.toFixed(2)}</li>
+                                <li>🙋 <strong>Your
+                                    Responsibility:</strong> ${claim.financialSummary.memberResp.toFixed(2)}</li>
+                            </ul>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
 
             {/* Line Items Table */}
-            <Row className="mb-4">
-                <Col>
-                    <h6>Line Items</h6>
-                    <Table striped bordered hover size="sm">
+            <Card className="mb-4">
+                <Card.Body>
+                    <h5>Line Items</h5>
+                    <Table bordered responsive hover size="sm">
                         <thead>
                         <tr>
                             <th>CPT</th>
                             <th>Description</th>
                             <th>Billed</th>
                             <th>Allowed</th>
-                            <th>Ded</th>
+                            <th>Deductible</th>
                             <th>Copay</th>
                             <th>Coins</th>
-                            <th>You</th>
+                            <th>You Pay</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {claim.lineItems.map((item, i) => (
-                            <tr key={i}>
+                        {claim.lineItems.map((item, idx) => (
+                            <tr key={idx}>
                                 <td>{item.cpt}</td>
                                 <td>{item.desc}</td>
                                 <td>${item.billed.toFixed(2)}</td>
@@ -123,19 +124,23 @@ const ClaimDetail = () => {
                         ))}
                         </tbody>
                     </Table>
-                </Col>
-            </Row>
+                </Card.Body>
+            </Card>
 
             {/* Footer Buttons */}
             <Row className="justify-content-between">
                 <Col xs="auto">
-                    <Button variant="secondary">&larr; Back to Claims</Button>
+                    <Button variant="secondary" onClick={() => window.history.back()}>
+                        ← Back
+                    </Button>
                 </Col>
                 <Col xs="auto">
-                    <Button variant="outline-primary">Download EOB PDF</Button>
+                    <Button variant="info">
+                        📄 Download EOB PDF
+                    </Button>
                 </Col>
             </Row>
-        </Container> : <NotFound></NotFound>
+        </Container>
     );
 };
 
