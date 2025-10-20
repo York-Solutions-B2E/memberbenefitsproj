@@ -6,6 +6,7 @@ import com.yorksolutions.memberbenefitsprojbe.entity.User;
 import com.yorksolutions.memberbenefitsprojbe.repo.UserRepository;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,6 +28,11 @@ public class MBService {
         this.userRepository = userRepository;
     }
 
+    public Page<User> getUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        return userRepository.findAll(pageable);
+    }
+
     public String verifyGoogleLogin(String token) throws Exception {
         GoogleIdToken idToken = verifier.verify(token);
         if (idToken != null) {
@@ -43,11 +49,13 @@ public class MBService {
                     .authSub(sub)
                     .email(email)
                     .build();
-            System.out.println("new user: " + user);
+//            System.out.println("new user: " + user);
 
             Optional<User> result = userRepository.findByAuthSub(sub);
-            if (result.isEmpty())
+            if (result.isEmpty()) {
                 userRepository.save(user);
+//                System.out.println("user not found new user saved: " + user);
+            }
             System.out.println("Google login successful for email-user: " + email);
             System.out.println("Google login payload subject: " + sub);
 //            may need to return payload so FE don't need decoding

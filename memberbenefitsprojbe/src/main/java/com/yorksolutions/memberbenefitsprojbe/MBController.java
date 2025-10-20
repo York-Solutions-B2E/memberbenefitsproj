@@ -1,6 +1,8 @@
 package com.yorksolutions.memberbenefitsprojbe;
 
+import com.yorksolutions.memberbenefitsprojbe.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -29,4 +31,11 @@ public class MBController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/api/page")
+    public Page<User> getAllUsers(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        return mbService.getUsers(page, size);
+    }
 }
