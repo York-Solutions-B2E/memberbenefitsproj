@@ -18,12 +18,17 @@ public class ClaimStatusEvent {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "claim_id")
+    @JoinColumn(nullable = false, name = "claim_id")
     private Claim claim;
 
     @Enumerated(EnumType.STRING)
     private ClaimStatus status;
 
     private OffsetDateTime occurredAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.occurredAt = OffsetDateTime.now();
+    }
     private String note; // optional
 }

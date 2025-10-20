@@ -18,7 +18,9 @@ public class Accumulator {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private UUID enrollmentId;
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "enrollment_id")
+    private Enrollment enrollment;
 
     @Enumerated(EnumType.STRING)
     private AccumulatorType type; // DEDUCTIBLE or OOP_MAX

@@ -18,12 +18,15 @@ public class Claim {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String claimNumber; // human-friendly key for UI
-    private UUID memberId;
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "member_id")
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id")
     private Provider provider;
+
+    private String claimNumber; // human-friendly key for UI e.g. C-10421
 
     private LocalDate serviceStartDate;
     private LocalDate serviceEndDate;
@@ -44,4 +47,9 @@ public class Claim {
     private List<ClaimStatusEvent> statusHistory = new ArrayList<>();
 
     private OffsetDateTime updatedAt;
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = OffsetDateTime.now();
+    }
 }
