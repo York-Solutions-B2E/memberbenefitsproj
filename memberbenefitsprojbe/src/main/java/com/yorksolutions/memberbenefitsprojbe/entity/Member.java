@@ -17,8 +17,13 @@ public class Member {
     @GeneratedValue
     private UUID id;
 
-    @Column(nullable = false)
-    private UUID userId; // FK to User (can also be a @ManyToOne)
+//    @Column(nullable = false)
+//    private UUID userId; // FK to User (can also be a @ManyToOne)
+//    similar coding but bottom one provide a relationship e.g. FK === id of user table
+
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
 
     private String firstName;
     private String lastName;

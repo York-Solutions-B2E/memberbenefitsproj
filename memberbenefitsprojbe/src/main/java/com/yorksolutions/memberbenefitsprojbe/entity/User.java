@@ -6,6 +6,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
+// user table not showing up in db had to rename
 @Table(name = "users")
 @Data
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String authProvider; // e.g., "google", "okta"
