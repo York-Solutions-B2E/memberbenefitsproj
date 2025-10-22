@@ -1,5 +1,6 @@
 package com.yorksolutions.memberbenefitsprojbe.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,13 +22,14 @@ public class Member {
 //    private UUID userId; // FK to User (can also be a @ManyToOne)
 //    similar coding but bottom one provide a relationship e.g. FK === id of user table
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(nullable = false, name = "user_id")
+//    private User user;
 
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    private LocalDate dateOfBirth; // yyyy-mm-dd
 
     private String email; // optional
     private String phone; // optional
@@ -37,4 +39,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrollment> enrollments; // one active per plan year
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Claim> accumulators;
 }

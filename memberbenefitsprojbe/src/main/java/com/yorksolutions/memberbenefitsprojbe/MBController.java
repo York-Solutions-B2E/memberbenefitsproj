@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/")
 public class MBController {
@@ -37,5 +39,11 @@ public class MBController {
             @RequestParam(defaultValue = "5") int size) {
 
         return mbService.getUsers(page, size);
+    }
+
+    @CrossOrigin
+    @GetMapping("/api/getUser")
+    public User getUser(@RequestParam String authSub) {
+        return mbService.getUser(authSub);
     }
 }

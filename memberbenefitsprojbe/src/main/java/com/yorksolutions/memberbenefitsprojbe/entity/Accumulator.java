@@ -1,5 +1,6 @@
 package com.yorksolutions.memberbenefitsprojbe.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yorksolutions.memberbenefitsprojbe.enums.AccumulatorType;
 import com.yorksolutions.memberbenefitsprojbe.enums.NetworkTier;
 import jakarta.persistence.*;
@@ -18,6 +19,7 @@ public class Accumulator {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(nullable = false, name = "enrollment_id")
     private Enrollment enrollment;

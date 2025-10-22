@@ -1,5 +1,6 @@
 package com.yorksolutions.memberbenefitsprojbe.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,17 +18,19 @@ public class Enrollment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "plan_id")
     private Plan plan;
 
     private LocalDate coverageStart;
     private LocalDate coverageEnd;
-    Boolean active;
+    private Boolean active;
 
     @OneToMany(mappedBy = "enrollment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Accumulator> accumulators;

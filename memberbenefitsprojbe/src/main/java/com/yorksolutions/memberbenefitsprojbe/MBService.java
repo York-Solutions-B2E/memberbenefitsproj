@@ -7,9 +7,12 @@ import com.yorksolutions.memberbenefitsprojbe.repo.UserRepository;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class MBService {
@@ -31,6 +34,13 @@ public class MBService {
     public Page<User> getUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
         return userRepository.findAll(pageable);
+    }
+
+    public User getUser(String authSub) {
+        var result = userRepository.findByAuthSub(authSub);
+        if (result.isEmpty())
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        return result.get();
     }
 
     public String verifyGoogleLogin(String token) throws Exception {

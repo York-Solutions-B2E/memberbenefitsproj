@@ -1,5 +1,6 @@
 package com.yorksolutions.memberbenefitsprojbe.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yorksolutions.memberbenefitsprojbe.enums.ClaimStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,6 +18,7 @@ public class ClaimStatusEvent {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "claim_id")
     private Claim claim;
