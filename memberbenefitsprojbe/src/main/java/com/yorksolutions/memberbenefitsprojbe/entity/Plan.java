@@ -1,5 +1,6 @@
 package com.yorksolutions.memberbenefitsprojbe.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yorksolutions.memberbenefitsprojbe.enums.PlanType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,7 @@ public class Plan {
 
     private Integer planYear; // e.g., 2025
 
+    @JsonIgnore
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Enrollment> accumulators;
+    private List<Enrollment> enrollments;
 }

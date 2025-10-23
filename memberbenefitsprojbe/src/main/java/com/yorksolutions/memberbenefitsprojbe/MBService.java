@@ -2,7 +2,9 @@ package com.yorksolutions.memberbenefitsprojbe;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.yorksolutions.memberbenefitsprojbe.entity.Member;
 import com.yorksolutions.memberbenefitsprojbe.entity.User;
+import com.yorksolutions.memberbenefitsprojbe.repo.MemberRepository;
 import com.yorksolutions.memberbenefitsprojbe.repo.UserRepository;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,14 @@ public class MBService {
 //    this is a better way, create and injection to constructor and autowired
     private GoogleIdTokenVerifier verifier;
     private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
-    public MBService(@NonNull GoogleIdTokenVerifier verifier, @NonNull UserRepository userRepository) {
+    public MBService(@NonNull GoogleIdTokenVerifier verifier, @NonNull UserRepository userRepository,
+                     @NonNull MemberRepository memberRepository) {
         this.verifier = verifier;
         this.userRepository = userRepository;
+        this.memberRepository = memberRepository;
     }
 
     public Page<User> getUsers(int page, int size) {
@@ -66,13 +71,20 @@ public class MBService {
                 userRepository.save(user);
 //                System.out.println("user not found new user saved: " + user);
             }
-            System.out.println("Google login successful for email-user: " + email);
-            System.out.println("Google login payload subject: " + sub);
+//            System.out.println("Google login successful for email-user: " + email);
+//            System.out.println("Google login payload subject: " + sub);
 //            may need to return payload so FE don't need decoding
 //            also might need jsonify instead of string for parsing
             return sub;
         } else {
             throw new Exception("Invalid ID token.");
         }
+    }
+
+    public Member getMember(UUID memberID) {
+        Optional<Member> result =  memberRepository.findById(memberID);
+        if (result.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return result.get();
     }
 }

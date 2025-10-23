@@ -1,5 +1,6 @@
 package com.yorksolutions.memberbenefitsprojbe;
 
+import com.yorksolutions.memberbenefitsprojbe.entity.Member;
 import com.yorksolutions.memberbenefitsprojbe.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,5 +46,11 @@ public class MBController {
     @GetMapping("/api/getUser")
     public User getUser(@RequestParam String authSub) {
         return mbService.getUser(authSub);
+    }
+
+    @CrossOrigin
+    @GetMapping("/api/getMember")
+    public Member getMember(@RequestParam UUID memberID) {
+        return mbService.getMember(memberID);
     }
 }

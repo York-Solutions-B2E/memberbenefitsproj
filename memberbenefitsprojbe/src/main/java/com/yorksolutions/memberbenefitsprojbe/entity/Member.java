@@ -1,6 +1,7 @@
 package com.yorksolutions.memberbenefitsprojbe.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,9 +38,10 @@ public class Member {
     @Embedded
     private Address mailingAddress;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enrollment> enrollments; // one active per plan year
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Claim> accumulators;
+    private List<Claim> claims;
 }

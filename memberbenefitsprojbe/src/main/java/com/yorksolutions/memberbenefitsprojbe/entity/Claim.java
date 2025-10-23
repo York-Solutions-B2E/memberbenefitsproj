@@ -24,8 +24,7 @@ public class Claim {
     @JoinColumn(nullable = false, name = "member_id")
     private Member member;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "provider_id")
     private Provider provider;
 
@@ -44,10 +43,10 @@ public class Claim {
     private BigDecimal totalMemberResponsibility;
 
     @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClaimLine> lines = new ArrayList<>();
+    private List<ClaimLine> claimLines = new ArrayList<>();
 
     @OneToMany(mappedBy = "claim", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClaimStatusEvent> statusHistory = new ArrayList<>();
+    private List<ClaimStatusEvent> claimStatusEvents = new ArrayList<>();
 
     private OffsetDateTime updatedAt;
 

@@ -3,6 +3,7 @@ import {Container, Row, Col, Card} from 'react-bootstrap';
 import {GoogleLogin} from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode';
 import {useNavigate} from "react-router";
+import {API_BASE_URL} from "../util/globalVar";
 
 function Login() {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Login() {
         const storedUser = sessionStorage.getItem('user');
         console.log(storedUser);
         if (storedUser) {
-            const userData= JSON.parse(storedUser);
+            const userData = JSON.parse(storedUser);
             // maybe a better practice to check the sub/token i.e "1203989049039"
             // redirect to dashboard if session was previously logged in
             console.log("user data", userData);
@@ -23,19 +24,26 @@ function Login() {
         }
     }, []); // Run only once on mount
 
-    const handleGoogleSuccess = (credentialResponse) => {
+    const handleGoogleSuccess = async (credentialResponse) => {
         // console.log('Google login successful:', credentialResponse);
-        console.log('Not decoded: ',credentialResponse.credential);
+        console.log('Not decoded: ', credentialResponse.credential);
         const decoded = jwtDecode(credentialResponse.credential);
         // console.log('Decoded JWT:', decoded);
         // TODO: Send the `credentialResponse.credential` to your backend for verification
 
+        const response = await fetch(API_BASE_URL+'auth/google', {
+            method: 'POST',
+            body: JSON.stringify(credentialResponse.credential)
+        })
+
+        if (response.ok) {
+            sessionStorage.setItem('user', JSON.stringify(decoded));
+            navigate('/dashboard');
+        }
         //store in session if success
         // Set item in session storage
-        sessionStorage.setItem('user', JSON.stringify(decoded));
 
         // render dashboard upon successful login
-        navigate('/dashboard');
     };
 
     const handleGoogleFailure = () => {
