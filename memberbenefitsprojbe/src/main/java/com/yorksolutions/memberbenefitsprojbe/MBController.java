@@ -1,5 +1,6 @@
 package com.yorksolutions.memberbenefitsprojbe;
 
+import com.yorksolutions.memberbenefitsprojbe.entity.Claim;
 import com.yorksolutions.memberbenefitsprojbe.entity.Member;
 import com.yorksolutions.memberbenefitsprojbe.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -52,5 +54,11 @@ public class MBController {
     @GetMapping("/api/getMember")
     public Member getMember(@RequestParam UUID memberID) {
         return mbService.getMember(memberID);
+    }
+
+    @CrossOrigin
+    @GetMapping("/api/getAllClaim")
+    public List<Claim> getAllClaim() {
+        return mbService.getAllClaim();
     }
 }

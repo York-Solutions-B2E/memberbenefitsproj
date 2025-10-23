@@ -42,6 +42,7 @@ const router = createBrowserRouter([
                 <ClaimList/>
             </ProtectedRoutes>
         ),
+        errorElement: <NotFound/>
     },
     {
         path: "ClaimDetail",

@@ -2,8 +2,10 @@ package com.yorksolutions.memberbenefitsprojbe;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.yorksolutions.memberbenefitsprojbe.entity.Claim;
 import com.yorksolutions.memberbenefitsprojbe.entity.Member;
 import com.yorksolutions.memberbenefitsprojbe.entity.User;
+import com.yorksolutions.memberbenefitsprojbe.repo.ClaimRepository;
 import com.yorksolutions.memberbenefitsprojbe.repo.MemberRepository;
 import com.yorksolutions.memberbenefitsprojbe.repo.UserRepository;
 import io.micrometer.common.lang.NonNull;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,13 +30,15 @@ public class MBService {
     private GoogleIdTokenVerifier verifier;
     private UserRepository userRepository;
     private MemberRepository memberRepository;
+    private ClaimRepository claimRepository;
 
     @Autowired
     public MBService(@NonNull GoogleIdTokenVerifier verifier, @NonNull UserRepository userRepository,
-                     @NonNull MemberRepository memberRepository) {
+                     @NonNull MemberRepository memberRepository, @NonNull ClaimRepository claimRepository) {
         this.verifier = verifier;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
+        this.claimRepository = claimRepository;
     }
 
     public Page<User> getUsers(int page, int size) {
@@ -86,5 +91,12 @@ public class MBService {
         if (result.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return result.get();
+    }
+
+    public List <Claim> getAllClaim() {
+        List<Claim> result = claimRepository.findAll();
+        if (result.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no claim found");
+        return result;
     }
 }

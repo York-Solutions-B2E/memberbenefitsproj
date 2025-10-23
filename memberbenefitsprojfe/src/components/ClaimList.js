@@ -1,14 +1,23 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Table, Form, InputGroup, Button, Dropdown, Pagination, Row, Col, Container, Card} from 'react-bootstrap';
 import SignOutButton from "./SignOutButton";
+import {API_BASE_URL} from "../util/globalVar";
 
 
-function ClaimList({}) {
-    const claimsData = [
-        {id: '#C-10421', date: '08/29–08/29', provider: 'River Clinic', status: 'Processed', amount: '$45.00'},
-        {id: '#C-10405', date: '08/20–08/20', provider: 'City Imaging Ctr', status: 'Denied', amount: '$0.00'},
-        {id: '#C-10398', date: '08/09–08/09', provider: 'Prime Hospital', status: 'Paid', amount: '$120.00'},
-    ];
+function ClaimList() {
+
+    const [claimsData, setClaimsData] = useState([]);
+    async function loadClaims(){
+        const response = await fetch(API_BASE_URL+"getAllClaim");
+        if (response.ok) {
+            const result = await response.json();
+            setClaimsData(result);
+        }
+    }
+
+    useEffect(() => {
+        loadClaims();
+    },[])
 
     const [statusFilter, setStatusFilter] = useState('');
     const [dateRange, setDateRange] = useState('');
@@ -92,13 +101,14 @@ function ClaimList({}) {
                         </tr>
                         </thead>
                         <tbody>
-                        {claimsData.map((claim, idx) => (
+                        {claimsData.slice(0,10)
+                            .map((claim, idx) => (
                             <tr key={idx}>
-                                <td>{claim.id}</td>
-                                <td>{claim.date}</td>
-                                <td>{claim.provider}</td>
+                                <td>{claim.claimNumber}</td>
+                                <td>{claim.serviceStartDate}</td>
+                                <td>{claim.provider.name}</td>
                                 <td>{claim.status}</td>
-                                <td>{claim.amount}</td>
+                                <td>{claim.totalBilled.toFixed(2)}</td>
                                 <td>
                                     <a href="#">View &rsaquo;</a>
                                 </td>
