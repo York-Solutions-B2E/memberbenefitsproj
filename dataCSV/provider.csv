@@ -1,0 +1,31 @@
+id,city,country,postal_code,state,street,name,phone,specialty
+eafc0386-670f-4e03-addb-9f186b312fc5,Fort Myers,United States,33994,FL,42719 Oneill Way,Blue Cross Blue Shield,239-838-0891,Orthopedics
+1545d68f-7688-4ec0-bbc4-edc162f85237,Sacramento,United States,94273,CA,49130 Burrows Place,Pharmacy,916-721-1851,Orthopedics
+87a306ae-5a4b-43ca-9e45-2d2c6c1677c7,Brooklyn,United States,11210,NY,7097 Harbort Avenue,Clinic,718-123-6666,Orthopedics
+d1c89c72-0b8b-4049-b137-965cc701fc3f,Knoxville,United States,37939,TN,5 Fairfield Street,Laboratory,865-359-6053,Pediatrics
+1afcab73-7fa4-409c-a57c-3ae54b8e99be,Shreveport,United States,71161,LA,60 Scofield Point,Aetna,318-726-4975,Pediatrics
+14d67a36-3a2b-4ed3-a39d-73bd586b1e9b,Jacksonville,United States,32244,FL,23087 Vera Terrace,Aetna,904-584-2814,Cardiology
+24f4492b-73d6-4ca3-944a-0c1c71193531,Fort Wayne,United States,46857,IN,4 Warbler Crossing,Blue Cross Blue Shield,260-516-0793,Cardiology
+68ef981e-4d6d-4847-abb1-06dbebc9b2c3,Lansing,United States,48912,MI,5 Summit Junction,Humana,517-138-8927,Cardiology
+5e9a4209-4d4e-4fe1-a4cb-b7ac49bf5997,Springfield,United States,62756,IL,9 Donald Plaza,Laboratory,217-531-6886,Neurology
+862674e0-83a9-4ec3-8e71-2a6a6f8e1b29,Austin,United States,78759,TX,50808 Carey Pass,UnitedHealthcare,512-155-3186,Dermatology
+fb0193f7-56c0-41c2-a25f-53fe25c050bc,Hagerstown,United States,21747,MD,72962 Weeping Birch Junction,Laboratory,240-602-7930,Dermatology
+9528370a-b23d-485f-9902-be068c5c4e9a,Louisville,United States,40287,KY,0 Merry Parkway,Pharmacy,502-714-7239,Cardiology
+339d297f-25bc-4f16-93b2-02d7b317adbf,Des Moines,United States,50320,IA,443 American Road,Rehabilitation Center,515-219-7903,Pediatrics
+e611f1d2-f921-473c-bb23-8884a7fb5468,Mobile,United States,36689,AL,6 Sutteridge Court,Laboratory,251-713-1974,Cardiology
+4142fc1e-3774-406d-b1db-21ab47837984,Philadelphia,United States,19141,PA,4 Moulton Center,Blue Cross Blue Shield,215-966-0429,Pediatrics
+1949150a-2235-46bf-9cb7-ae26be991a7b,Chicago,United States,60652,IL,0731 Crest Line Lane,Hospital,773-601-9197,Cardiology
+b29b3571-af4a-4cbf-86d0-ea7a855212a9,Charleston,United States,25362,WV,9 Oriole Pass,Humana,304-642-4813,Pediatrics
+a3609421-36fb-4067-915a-4f51fb580181,Spartanburg,United States,29305,SC,612 International Center,Aetna,864-777-5142,Pediatrics
+7c0ebc49-a3e6-495a-91c6-04c1199e010c,New York City,United States,10105,NY,5 Shasta Avenue,Hospital,212-841-6065,Dermatology
+7984940c-a921-4bdd-a842-58e5fc74a709,Tampa,United States,33647,FL,23 Everett Junction,Humana,813-556-4027,Neurology
+85461ffc-24cc-42a3-be67-d86a9a58053b,Richmond,United States,23242,VA,910 Randy Court,Humana,804-218-5534,Dermatology
+020e4042-6eb7-4bcf-9434-d7d8c3724141,Flushing,United States,11388,NY,553 Buell Street,Urgent Care Center,646-527-4835,Neurology
+79a92732-9129-46f9-98f1-f07810940669,Cincinnati,United States,45218,OH,30385 Onsgard Pass,Blue Cross Blue Shield,513-473-9743,Dermatology
+929933b4-aa57-4cd0-8664-2428bc72ea01,Milwaukee,United States,53234,WI,0697 Hayes Avenue,Blue Cross Blue Shield,414-585-8151,Cardiology
+edb6a555-2b01-45ce-b3b7-29370b10d4ce,Washington,United States,20310,DC,7510 Milwaukee Street,Clinic,202-305-3568,Dermatology
+9c88d28c-ce68-42d4-91e4-4ea9bc19c3df,Daytona Beach,United States,32128,FL,6 Riverside Avenue,Humana,386-628-0100,Orthopedics
+744f5c29-7b51-47d4-9ad2-66259ca97e17,Migrate,United States,41905,KY,54358 Blackbird Lane,Blue Cross Blue Shield,314-317-3303,Neurology
+823ba6ac-f75d-46a7-a246-3925264c5ce6,Sterling,United States,20167,VA,779 Cambridge Street,Clinic,571-934-3725,Dermatology
+af1bbdd7-1f65-46aa-8606-fc330517f447,Columbia,United States,65211,MO,371 Melrose Court,Pharmacy,573-878-8511,Neurology
+4cc9d003-70db-4b6e-b2fe-a16b0d9bf9ea,Los Angeles,United States,90045,CA,627 Jay Point,Clinic,323-600-8262,Pediatrics
