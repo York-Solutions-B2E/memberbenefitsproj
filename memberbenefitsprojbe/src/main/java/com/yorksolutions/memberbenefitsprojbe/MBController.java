@@ -38,12 +38,12 @@ public class MBController {
 
     @CrossOrigin
     @GetMapping("/api/page")
-    public Page<User> getAllUsers(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
-
-        return mbService.getUsers(page, size);
+    public Page<Claim> getSelectedClaimPage(@RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "5") int size) {
+        return mbService.getSelectedClaimPage(page, size);
     }
 
+    // just here for dev purpose
     @CrossOrigin
     @GetMapping("/api/getUser")
     public User getUser(@RequestParam String authSub) {
@@ -56,9 +56,4 @@ public class MBController {
         return mbService.getMember(memberID);
     }
 
-    @CrossOrigin
-    @GetMapping("/api/getAllClaim")
-    public List<Claim> getAllClaim() {
-        return mbService.getAllClaim();
-    }
 }

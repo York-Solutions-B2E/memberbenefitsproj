@@ -7,17 +7,24 @@ import {API_BASE_URL} from "../util/globalVar";
 function ClaimList() {
 
     const [claimsData, setClaimsData] = useState([]);
-    async function loadClaims(){
-        const response = await fetch(API_BASE_URL+"getAllClaim");
+    const [currentPageNumber, setCurrentPageNumber] = useState(1);
+    const [sizePerPage, setSizePerPage] = useState(5);
+    const [totalPages, setTotalPages] = useState(5);
+
+    async function loadClaims(page = 0, size = 5) {
+        const response = await fetch(API_BASE_URL + `page?page=${page}&size=${size}`, {});
         if (response.ok) {
             const result = await response.json();
-            setClaimsData(result);
+            setClaimsData(result.content);
+            setCurrentPageNumber(Number(result.number) + 1);
+            setSizePerPage(result.size);
+            setTotalPages(result.totalPages);
         }
     }
 
     useEffect(() => {
         loadClaims();
-    },[])
+    }, [])
 
     const [statusFilter, setStatusFilter] = useState('');
     const [dateRange, setDateRange] = useState('');
@@ -26,6 +33,17 @@ function ClaimList() {
 
     const activeSession = JSON.parse(sessionStorage.getItem('user'));
 
+
+    async function handleSizePerPageChange(e) {
+        const newSizePerPage = Number(e.target.value)
+        setSizePerPage(newSizePerPage);
+        await loadClaims(currentPageNumber - 1, newSizePerPage);
+    }
+
+    async function handlePageChange(number) {
+        if (number !== currentPageNumber) // check to see if request/fetch needs to be call
+            await loadClaims(number - 1, sizePerPage);
+    }
 
     return (
         <Container className="mt-4">
@@ -101,8 +119,7 @@ function ClaimList() {
                         </tr>
                         </thead>
                         <tbody>
-                        {claimsData.slice(0,10)
-                            .map((claim, idx) => (
+                        {!claimsData ? <></> : claimsData.map((claim, idx) => (
                             <tr key={idx}>
                                 <td>{claim.claimNumber}</td>
                                 <td>{claim.serviceStartDate}</td>
@@ -124,18 +141,25 @@ function ClaimList() {
                         Page <strong>1</strong> of <strong>5</strong>
                     </div>
                     <div>
-                        <Form.Select size="sm" style={{width: '100px', display: 'inline-block'}}>
-                            <option>10</option>
-                            <option>20</option>
-                            <option>50</option>
+                        <Form.Select size="sm"
+                                     style={{width: '100px', display: 'inline-block'}}
+                                     value={sizePerPage} //  Binds the select box to state
+                                     onChange={handleSizePerPageChange} //  Captures input change
+                        >
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={15}>15</option>
                         </Form.Select>{' '}
                         per page
                     </div>
                     <Pagination className="mb-0">
                         <Pagination.Prev/>
-                        <Pagination.Item active>1</Pagination.Item>
-                        <Pagination.Item>2</Pagination.Item>
-                        <Pagination.Item>3</Pagination.Item>
+                        <Pagination.Item active={1 === currentPageNumber}
+                                         onClick={() => handlePageChange(1)}>1</Pagination.Item>
+                        <Pagination.Item active={2 === currentPageNumber}
+                                         onClick={() => handlePageChange(2)}>2</Pagination.Item>
+                        <Pagination.Item active={3 === currentPageNumber}
+                                         onClick={() => handlePageChange(3)}>3</Pagination.Item>
                         <Pagination.Ellipsis disabled/>
                         <Pagination.Item>Next &rsaquo;</Pagination.Item>
                     </Pagination>

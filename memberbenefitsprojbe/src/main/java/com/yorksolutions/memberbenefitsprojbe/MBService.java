@@ -26,7 +26,7 @@ public class MBService {
 //    private GoogleIdTokenVerifier verifier;
 //    this works too, but not recommend for testing n robustness
 
-//    this is a better way, create and injection to constructor and autowired
+    //    this is a better way, create and injection to constructor and autowired
     private GoogleIdTokenVerifier verifier;
     private UserRepository userRepository;
     private MemberRepository memberRepository;
@@ -41,9 +41,9 @@ public class MBService {
         this.claimRepository = claimRepository;
     }
 
-    public Page<User> getUsers(int page, int size) {
+    public Page<Claim> getSelectedClaimPage(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
-        return userRepository.findAll(pageable);
+        return claimRepository.findAll(pageable);
     }
 
     public User getUser(String authSub) {
@@ -57,11 +57,9 @@ public class MBService {
         GoogleIdToken idToken = verifier.verify(token);
         if (idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
-            // Get user information
             String sub = payload.getSubject();
             String email = payload.getEmail();
             String provider = payload.getIssuer();
-//            String name = (String) payload.get("name");
 
             // You can now save or retrieve the user from your database using the unique ID (sub)
             User user = User.builder()
@@ -69,7 +67,6 @@ public class MBService {
                     .authSub(sub)
                     .email(email)
                     .build();
-//            System.out.println("new user: " + user);
 
             Optional<User> result = userRepository.findByAuthSub(sub);
             if (result.isEmpty()) {
@@ -87,16 +84,17 @@ public class MBService {
     }
 
     public Member getMember(UUID memberID) {
-        Optional<Member> result =  memberRepository.findById(memberID);
+        Optional<Member> result = memberRepository.findById(memberID);
         if (result.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return result.get();
     }
 
-    public List <Claim> getAllClaim() {
+    public List<Claim> getAllClaim() {
         List<Claim> result = claimRepository.findAll();
         if (result.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no claim found");
         return result;
     }
+
 }
