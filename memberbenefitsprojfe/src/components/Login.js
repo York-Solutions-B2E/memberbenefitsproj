@@ -31,9 +31,9 @@ function Login() {
         // console.log('Decoded JWT:', decoded);
         // TODO: Send the `credentialResponse.credential` to your backend for verification
 
-        const response = await fetch(API_BASE_URL+'auth/google', {
+        const response = await fetch(API_BASE_URL + 'auth/google', {
             method: 'POST',
-            body: JSON.stringify(credentialResponse.credential)
+            body: credentialResponse.credential
         })
 
         if (response.ok) {
